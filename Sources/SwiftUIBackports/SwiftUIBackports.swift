@@ -69,7 +69,7 @@ public enum BackportGlass: Equatable, Sendable {
     case tinted(Color?)
     case interactive(isEnabled: Bool)
     case tintedAndInteractive(color: Color?, isEnabled: Bool)
-
+    
     // Default convenience
     public static var regularInteractive: BackportGlass {
         .tintedAndInteractive(color: nil, isEnabled: true)
@@ -94,11 +94,28 @@ extension BackportGlass {
 
 @MainActor
 extension Backport where Content: View {
-    @ViewBuilder func glassEffect(_ backportGlass: BackportGlass = .regular, in shape: some Shape = Capsule(), isEnabled: Bool = true) -> some View {
+    @ViewBuilder func glassEffect(
+        _ backportGlass: BackportGlass = .regular,
+        in shape: some Shape = Capsule(),
+        isEnabled: Bool = true
+    ) -> some View {
         if #available(iOS 26.0, *) {
             content.glassEffect(backportGlass.toGlass, in: shape, isEnabled: isEnabled)
         } else {
             content
+        }
+    }
+    
+    @ViewBuilder func glassEffect(
+        _ backportGlass: BackportGlass = .regular,
+        in shape: some Shape = Capsule(),
+        isEnabled: Bool = true,
+        fallbackBackground: some ShapeStyle
+    ) -> some View {
+        if #available(iOS 26.0, *) {
+            content.glassEffect(backportGlass.toGlass, in: shape, isEnabled: isEnabled)
+        } else {
+            content.background(fallbackBackground)
         }
     }
 }
