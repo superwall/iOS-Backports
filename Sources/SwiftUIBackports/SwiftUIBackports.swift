@@ -118,6 +118,23 @@ extension BackportGlassEffectTransition {
     }
 }
 
+public enum BackportScrollEdgeEffectStyle: Hashable, Sendable {
+    case automatic
+    case hard
+    case soft
+}
+
+@available(iOS 26.0, *)
+extension BackportScrollEdgeEffectStyle {
+    var toStyle: ScrollEdgeEffectStyle {
+        switch self {
+        case .automatic: return .automatic
+        case .hard: return .hard
+        case .soft: return .soft
+        }
+    }
+}
+
 @MainActor
 extension Backport where Content: View {
     @ViewBuilder func glassEffectTransition(
@@ -158,6 +175,47 @@ extension Backport where Content: View {
     @ViewBuilder func glassButtonStyle() -> some View {
         if #available(iOS 26.0, *) {
             content.buttonStyle(.glass)
+        } else {
+            content
+        }
+    }
+    
+    @ViewBuilder func backgroundExtensionEffect() -> some View {
+        if #available(iOS 26.0, *) {
+            content.backgroundExtensionEffect()
+        } else {
+            content
+        }
+    }
+
+    @ViewBuilder func scrollEdgeEffectStyle(
+        _ style: BackportScrollEdgeEffectStyle?,
+        for edges: Edge.Set
+    ) -> some View {
+        if #available(iOS 26.0, *) {
+            content.scrollEdgeEffectStyle(style?.toStyle, for: edges)
+        } else {
+            content
+        }
+    }
+
+    @ViewBuilder func scrollEdgeEffectDisabled(
+        _ disabled: Bool = true,
+        for edges: Edge.Set = .all
+    ) -> some View {
+        if #available(iOS 26.0, *) {
+            content.scrollEdgeEffectDisabled(disabled, for: edges)
+        } else {
+            content
+        }
+    }
+    
+    @ViewBuilder func glassEffectID(
+        _ id: (some Hashable & Sendable)?,
+        in namespace: Namespace.ID
+    ) -> some View {
+        if #available(iOS 26.0, *) {
+            content.glassEffectID(id, in: namespace)
         } else {
             content
         }
