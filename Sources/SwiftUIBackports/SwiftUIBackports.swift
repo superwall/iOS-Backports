@@ -28,7 +28,10 @@ extension Backport where Content: View {
         }
     }
     
-    @ViewBuilder func zoom(sourceID: some Hashable, in namespace: Namespace.ID) -> some View {
+    @ViewBuilder func zoom(
+        sourceID: some Hashable,
+        in namespace: Namespace.ID
+    ) -> some View {
         if #available(iOS 18.0, *) {
             content
                 .navigationTransition(.zoom(sourceID: sourceID, in: namespace))
@@ -38,7 +41,10 @@ extension Backport where Content: View {
         }
     }
     
-    @ViewBuilder func matchedTransitionSource(id: some Hashable, in namespace: Namespace.ID) -> some View {
+    @ViewBuilder func matchedTransitionSource(
+        id: some Hashable,
+        in namespace: Namespace.ID
+    ) -> some View {
         if #available(iOS 18.0, *) {
             content.matchedTransitionSource(id: id, in: namespace)
         } else {
@@ -46,7 +52,10 @@ extension Backport where Content: View {
         }
     }
     
-    @ViewBuilder func imagePlayground(_ presented: Binding<Bool>, completion: @escaping (URL?) -> Void) -> some View {
+    @ViewBuilder func imagePlayground(
+        _ presented: Binding<Bool>,
+        completion: @escaping (URL?) -> Void
+    ) -> some View {
         if #available(iOS 18.1, *) {
             if ImagePlaygroundViewController.isAvailable {
                 content
@@ -92,8 +101,36 @@ extension BackportGlass {
     }
 }
 
+public enum BackportGlassEffectTransition: Equatable, Sendable {
+    case identity
+    case matchedGeometry(properties: MatchedGeometryProperties = .frame, anchor: UnitPoint = .center)
+}
+
+@available(iOS 26, *)
+extension BackportGlassEffectTransition {
+    var toTransition: GlassEffectTransition {
+        switch self {
+        case .identity:
+            return .identity
+        case .matchedGeometry(let properties, let anchor):
+            return .matchedGeometry(properties: properties, anchor: anchor)
+        }
+    }
+}
+
 @MainActor
 extension Backport where Content: View {
+    @ViewBuilder func glassEffectTransition(
+        _ transition: BackportGlassEffectTransition,
+        isEnabled: Bool = true
+    ) -> some View {
+        if #available(iOS 26.0, *) {
+            content.glassEffectTransition(transition.toTransition, isEnabled: isEnabled)
+        } else {
+            content
+        }
+    }
+
     @ViewBuilder func glassEffect(
         _ backportGlass: BackportGlass = .regular,
         in shape: some Shape = Capsule(),
@@ -110,12 +147,19 @@ extension Backport where Content: View {
         _ backportGlass: BackportGlass = .regular,
         in shape: some Shape = Capsule(),
         isEnabled: Bool = true,
-        fallbackBackground: some ShapeStyle
-    ) -> some View {
+        fallbackBackground: some ShapeStyle) -> some View {
         if #available(iOS 26.0, *) {
             content.glassEffect(backportGlass.toGlass, in: shape, isEnabled: isEnabled)
         } else {
             content.background(fallbackBackground)
+        }
+    }
+    
+    @ViewBuilder func glassButtonStyle() -> some View {
+        if #available(iOS 26.0, *) {
+            content.buttonStyle(.glass)
+        } else {
+            content
         }
     }
 }
