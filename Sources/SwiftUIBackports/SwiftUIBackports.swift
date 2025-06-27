@@ -16,7 +16,7 @@ extension View {
     var backport: Backport<Self> { Backport(self) }
 }
 
-// MARK: iOS Version Extensions
+// MARK: iOS 18 Extensions
 
 @MainActor
 extension Backport where Content: View {
@@ -56,6 +56,47 @@ extension Backport where Content: View {
             } else {
                 content
             }
+        } else {
+            content
+        }
+    }
+}
+
+// MARK: iOS 26 Extensions
+
+public enum BackportGlass: Equatable, Sendable {
+    case regular
+    case tinted(Color?)
+    case interactive(isEnabled: Bool)
+    case tintedAndInteractive(color: Color?, isEnabled: Bool)
+
+    // Default convenience
+    public static var regularInteractive: BackportGlass {
+        .tintedAndInteractive(color: nil, isEnabled: true)
+    }
+}
+
+@available(iOS 26, *)
+extension BackportGlass {
+    public var toGlass: Glass {
+        switch self {
+        case .regular:
+            return .regular
+        case .tinted(let color):
+            return .regular.tint(color)
+        case .interactive(let isEnabled):
+            return .regular.interactive(isEnabled)
+        case .tintedAndInteractive(let color, let isEnabled):
+            return .regular.tint(color).interactive(isEnabled)
+        }
+    }
+}
+
+@MainActor
+extension Backport where Content: View {
+    @ViewBuilder func glassEffect(_ backportGlass: BackportGlass = .regular, in shape: some Shape = Capsule(), isEnabled: Bool = true) -> some View {
+        if #available(iOS 26.0, *) {
+            content.glassEffect(backportGlass.toGlass, in: shape, isEnabled: isEnabled)
         } else {
             content
         }
