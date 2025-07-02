@@ -135,6 +135,36 @@ extension BackportScrollEdgeEffectStyle {
     }
 }
 
+@available(iOS 26.0, *)
+extension BackportSymbolColorRenderingMode {
+    var toMode: SymbolColorRenderingMode {
+        switch self {
+        case .flat: return .flat
+        case .gradient: return .gradient
+        }
+    }
+}
+
+public enum BackportSymbolColorRenderingMode: Equatable, Sendable {
+    case flat
+    case gradient
+}
+
+public enum BackportSymbolVariableValueMode: Equatable, Sendable {
+    case color
+    case draw
+}
+
+@available(iOS 26.0, *)
+extension BackportSymbolVariableValueMode {
+    var toMode: SymbolVariableValueMode {
+        switch self {
+        case .color: return .color
+        case .draw: return .draw
+        }
+    }
+}
+
 @MainActor
 extension Backport where Content: View {
     @ViewBuilder func glassEffectTransition(
@@ -216,6 +246,22 @@ extension Backport where Content: View {
     ) -> some View {
         if #available(iOS 26.0, *) {
             content.glassEffectID(id, in: namespace)
+        } else {
+            content
+        }
+    }
+    
+    @ViewBuilder func symbolColorRenderingMode(_ mode: BackportSymbolColorRenderingMode?) -> some View {
+        if #available(iOS 26.0, *) {
+            content.symbolColorRenderingMode(mode?.toMode)
+        } else {
+            content
+        }
+    }
+
+    @ViewBuilder func symbolVariableValueMode(_ mode: BackportSymbolVariableValueMode?) -> some View {
+        if #available(iOS 26.0, *) {
+            content.symbolVariableValueMode(mode?.toMode)
         } else {
             content
         }
