@@ -12,14 +12,14 @@ public struct Backport<Content> {
     }
 }
 
-extension View {
+public extension View {
     var backport: Backport<Self> { Backport(self) }
 }
 
 // MARK: iOS 18 Extensions
 
 @MainActor
-extension Backport where Content: View {
+public extension Backport where Content: View {
     @ViewBuilder func presentationSizeForm() -> some View {
         if #available(iOS 18, *) {
             content.presentationSizing(.form)
@@ -107,7 +107,7 @@ public enum BackportGlassEffectTransition: Equatable, Sendable {
 }
 
 @available(iOS 26, *)
-extension BackportGlassEffectTransition {
+public extension BackportGlassEffectTransition {
     var toTransition: GlassEffectTransition {
         switch self {
         case .identity:
@@ -125,7 +125,7 @@ public enum BackportScrollEdgeEffectStyle: Hashable, Sendable {
 }
 
 @available(iOS 26.0, *)
-extension BackportScrollEdgeEffectStyle {
+public extension BackportScrollEdgeEffectStyle {
     var toStyle: ScrollEdgeEffectStyle {
         switch self {
         case .automatic: return .automatic
@@ -136,7 +136,7 @@ extension BackportScrollEdgeEffectStyle {
 }
 
 @available(iOS 26.0, *)
-extension BackportSymbolColorRenderingMode {
+public extension BackportSymbolColorRenderingMode {
     var toMode: SymbolColorRenderingMode {
         switch self {
         case .flat: return .flat
@@ -156,7 +156,7 @@ public enum BackportSymbolVariableValueMode: Equatable, Sendable {
 }
 
 @available(iOS 26.0, *)
-extension BackportSymbolVariableValueMode {
+public extension BackportSymbolVariableValueMode {
     var toMode: SymbolVariableValueMode {
         switch self {
         case .color: return .color
@@ -166,7 +166,7 @@ extension BackportSymbolVariableValueMode {
 }
 
 @MainActor
-extension Backport where Content: View {
+public extension Backport where Content: View {
     @ViewBuilder func glassEffectTransition(
         _ transition: BackportGlassEffectTransition,
         isEnabled: Bool = true
