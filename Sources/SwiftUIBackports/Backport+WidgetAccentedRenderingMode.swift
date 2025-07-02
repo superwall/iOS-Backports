@@ -34,7 +34,7 @@ extension BackDeployedWidgetAccentedRenderingMode {
 
 public extension Backport where Content == Image {
     /// A back deployed method for `widgetAccentedRenderingMode` view modifier
-    func backDeployedWidgetAccentedRenderingMode(_ renderingMode: BackDeployedWidgetAccentedRenderingMode?) -> some View {
+    func widgetAccentedRenderingMode(_ renderingMode: BackDeployedWidgetAccentedRenderingMode?) -> some View {
         if #available(iOS 18.0, *) {
             return content
                 .widgetAccentedRenderingMode(renderingMode?.value)

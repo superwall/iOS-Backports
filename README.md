@@ -83,14 +83,14 @@ Just copy the `Backport.swift` file into your project. That’s it.
 
 | iOS Version | Modifier                                | Description                                      |
 |-------------|------------------------------------------|--------------------------------------------------|
-| iOS 17.0    | `backDeployedContentTransition(_:)`     | Applies numeric text content transitions         |
-| iOS 17.0    | `backDeployedDisfavoredLocations(_:for:)` | Sets widget disfavored locations               |
+| iOS 17.0    | `contentTransition(_:)`                 | Applies numeric text content transitions         |
+| iOS 17.0    | `disfavoredLocations(_:for:)`           | Sets widget disfavored locations                 |
 | iOS 18.0    | `presentationSizeForm()`                | Applies `.presentationSizing(.form)`            |
 | iOS 18.0    | `zoom(sourceID:in:)`                    | Applies a zoom navigation transition             |
 | iOS 18.0    | `matchedTransitionSource(id:in:)`       | Marks a view as a matched transition source      |
-| iOS 18.0    | `backDeployedWidgetAccentedRenderingMode(_:)` | Sets widget image accent rendering mode    |
+| iOS 18.0    | `widgetAccentedRenderingMode(_:)`       | Sets widget image accent rendering mode          |
 | iOS 18.1    | `imagePlayground(_:completion:)`        | Presents an image playground sheet               |
-| iOS 18.4    | `backDeployedImagePlaygroundSheet(isPresented:onCompletion:)` | Presents Image Playground sheet safely |
+| iOS 18.1    | `imagePlaygroundSheet(isPresented:onCompletion:)` | Presents Image Playground sheet            |
 | iOS 26.0    | `glassEffect(_:in:isEnabled:)`          | Applies a glass effect                           |
 | iOS 26.0    | `glassEffect(_:in:isEnabled:fallback:)`| Glass effect with fallback for unsupported OS    |
 | iOS 26.0    | `glassButtonStyle()`                    | Applies the glass button style                   |

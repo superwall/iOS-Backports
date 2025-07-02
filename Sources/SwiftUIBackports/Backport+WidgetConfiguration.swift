@@ -15,15 +15,15 @@ public enum WidgetDisfavoredLocation {
     case iPhoneWidgetsOnMac
 }
 
-extension WidgetConfiguration {
-    
+extension Backport where Content: WidgetConfiguration {
     /// A back deployed method for `disfavoredLocations`
-    public func backDeployedDisfavoredLocations(
+    @MainActor
+    public func disfavoredLocations(
         _ locations: [WidgetDisfavoredLocation],
         for families: [WidgetFamily]
     ) -> some WidgetConfiguration {
         if #available(iOS 17.0, *) {
-            return self.disfavoredLocations(
+            return content.disfavoredLocations(
                 locations.map { location in
                     switch location {
                     case .homeScreen:
@@ -39,7 +39,7 @@ extension WidgetConfiguration {
                 for: families
             )
         } else {
-            return self
+            return content
         }
     }
 }

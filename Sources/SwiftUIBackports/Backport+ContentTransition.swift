@@ -24,7 +24,7 @@ public extension Backport where Content: View {
     /// A back deployed version of `contentTransition`
     ///
     /// https://developer.apple.com/documentation/swiftui/view/contenttransition(_:)
-    @ViewBuilder func backDeployedContentTransition(_ transition: BackDeployedContentTransition) -> some View {
+    @ViewBuilder func contentTransition(_ transition: BackDeployedContentTransition) -> some View {
         if #available(iOS 17.0, *) {
             content
                 .contentTransition(.numericText(value: transition.value))

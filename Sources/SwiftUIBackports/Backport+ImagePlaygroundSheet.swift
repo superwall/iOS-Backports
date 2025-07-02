@@ -23,7 +23,7 @@ import ImagePlayground
 /// - Returns: A view that conditionally presents the Image Playground sheet on supported OS versions.
 @MainActor
 public extension Backport where Content: View {
-    func backDeployedImagePlaygroundSheet(
+    func imagePlaygroundSheet(
         isPresented: Binding<Bool>,
         sourceImage: Image? = nil,
         onCompletion: @escaping (URL) -> Void,
