@@ -290,7 +290,7 @@ public extension Backport where Content: View {
         }
     }
     
-    @ViewBuilder public func tabBarMinimizeBehavior(_ behavior: BackportTabBarMinimizeBehavior) -> some View {
+    @ViewBuilder func tabBarMinimizeBehavior(_ behavior: BackportTabBarMinimizeBehavior) -> some View {
         if #available(iOS 26.0, *) {
             content.tabBarMinimizeBehavior(behavior.toBehavior)
         } else {
