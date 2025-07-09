@@ -97,6 +97,7 @@ Just copy the `Backport.swift` file into your project. That’s it.
 | iOS 26.0    | `scrollEdgeEffectDisabled(_:for:)`      | Disables scroll edge effects                     |
 | iOS 26.0    | `symbolColorRenderingMode(_:)`          | Sets symbol image rendering mode                 |
 | iOS 26.0    | `symbolVariableValueMode(_:)`           | Sets variable value rendering mode               |
+| iOS 26.0    | `tabBarMinimizeBehavior(_:)`            | Sets the bar bar behavior for iOS 26 styles      |
 
 ## Contributing
 
