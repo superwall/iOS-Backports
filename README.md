@@ -1,3 +1,6 @@
+
+![backporthero](https://github.com/user-attachments/assets/483d9db8-7fdf-4ce5-9ae4-6b6d0004184b)
+
 # SwiftUI-Backports
 
 > ✨ A lightweight way to use the latest SwiftUI modifier APIs while gracefully supporting older iOS versions.
@@ -47,7 +50,10 @@ MyView()
     .backport.glasseffect()
 ```
 
-And the `Backport` type handles the fallback internally. Since iOS version checks occur at compile time, you aren't hit with SwiftUI performance penalities from `if/else` checks.
+And the `Backport` type handles the fallback internally. Since iOS version checks occur at compile time, you aren't hit with SwiftUI performance penalities from `if/else` checks. Here, the left side is using a thin material, while the right uses a glass effect on iOS 26 and above:
+
+![example](https://github.com/user-attachments/assets/397a5b20-8d70-4caf-a3e6-70c382cb150e)
+
 
 ## Installation
 
