@@ -165,6 +165,29 @@ public extension BackportSymbolVariableValueMode {
     }
 }
 
+public enum BackportTabBarMinimizeBehavior: Hashable, Sendable {
+    case automatic
+    case onScrollDown
+    case onScrollUp
+    case never
+}
+
+@available(iOS 26.0, *)
+public extension BackportTabBarMinimizeBehavior {
+    var toBehavior: TabBarMinimizeBehavior {
+        switch self {
+        case .automatic:
+            return .automatic
+        case .onScrollDown:
+            return .onScrollDown
+        case .onScrollUp:
+            return .onScrollUp
+        case .never:
+            return .never
+        }
+    }
+}
+
 @MainActor
 public extension Backport where Content: View {
     @ViewBuilder func glassEffectTransition(
@@ -262,6 +285,14 @@ public extension Backport where Content: View {
     @ViewBuilder func symbolVariableValueMode(_ mode: BackportSymbolVariableValueMode?) -> some View {
         if #available(iOS 26.0, *) {
             content.symbolVariableValueMode(mode?.toMode)
+        } else {
+            content
+        }
+    }
+    
+    @ViewBuilder public func tabBarMinimizeBehavior(_ behavior: BackportTabBarMinimizeBehavior) -> some View {
+        if #available(iOS 26.0, *) {
+            content.tabBarMinimizeBehavior(behavior.toBehavior)
         } else {
             content
         }
