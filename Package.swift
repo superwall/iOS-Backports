@@ -16,10 +16,10 @@ let package = Package(
     targets: [
         .target(
             name: "SwiftUIBackports",
-            dependencies: [
-                .framework(name: "WidgetKit")
-            ],
-            path: "Sources/SwiftUIBackports"
-        ),
+            path: "Sources/SwiftUIBackports",
+            linkerSettings: [
+                .linkedFramework("WidgetKit")
+            ]
+        )
     ]
 )
