@@ -47,7 +47,7 @@ You can write:
 
 ```swift
 MyView()
-    .backport.glasseffect()
+    .backport.glassEffect()
 ```
 
 And the `Backport` type handles the fallback internally. Since iOS version checks occur at compile time, you aren't hit with SwiftUI performance penalities from `if/else` checks. Here, the left side is using a thin material, while the right uses a glass effect on iOS 26 and above:
