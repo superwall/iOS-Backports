@@ -23,7 +23,7 @@ public extension View {
 public enum BackDeployedContentTransition {
     case identity
     case opacity
-    case scale
+    case numericText
 }
 
 @MainActor
@@ -36,8 +36,8 @@ public extension Backport where Content: View {
                 content.contentTransition(.identity)
             case .opacity:
                 content.contentTransition(.opacity)
-            case .scale:
-                content.contentTransition(.scale)
+            case .numericText:
+                content.contentTransition(.numericText())
             }
         } else {
             content
@@ -100,34 +100,6 @@ public extension Backport where Content: View {
     }
 }
 
-// MARK: iOS 18 WidgetKit Extensions
-
-/// Backport enum for WidgetAccentedRenderingMode (iOS 18)
-public enum BackDeployedWidgetAccentedRenderingMode: Equatable, Sendable {
-    case automatic
-    case accented
-    case nonAccented
-}
-
-@MainActor
-public extension Backport where Content: View {
-    @ViewBuilder
-    func widgetAccentedRenderingMode(_ mode: BackDeployedWidgetAccentedRenderingMode) -> some View {
-        if #available(iOS 18.0, *) {
-            switch mode {
-            case .automatic:
-                content.widgetAccentedRenderingMode(.automatic)
-            case .accented:
-                content.widgetAccentedRenderingMode(.accented)
-            case .nonAccented:
-                content.widgetAccentedRenderingMode(.nonAccented)
-            }
-        } else {
-            content
-        }
-    }
-}
-
 // MARK: iOS 26 Extensions
 
 public enum BackportGlass: Equatable, Sendable {
@@ -166,7 +138,6 @@ extension BackportGlass {
 
 public enum BackportGlassEffectTransition: Equatable, Sendable {
     case identity
-    case matchedGeometry(properties: MatchedGeometryProperties = .frame, anchor: UnitPoint = .center)
     case materialize
 }
 
@@ -176,8 +147,6 @@ public extension BackportGlassEffectTransition {
         switch self {
         case .identity:
             return .identity
-        case .matchedGeometry(let properties, let anchor):
-            return .matchedGeometry(properties: properties, anchor: anchor)
         case .materialize:
             return .materialize
         }
@@ -266,7 +235,7 @@ public extension Backport where Content: View {
     
     @ViewBuilder func glassEffect(
         _ backportGlass: BackportGlass = .regular,
-        in shape: some Shape = DefaultGlassEffectShape()
+        in shape: some Shape = Capsule()
     ) -> some View {
         if #available(iOS 26.0, *) {
             content.glassEffect(backportGlass.toGlass, in: shape)
@@ -278,10 +247,9 @@ public extension Backport where Content: View {
     @ViewBuilder func glassEffect(
         _ backportGlass: BackportGlass = .regular,
         in shape: some Shape = Capsule(),
-        isEnabled: Bool = true,
         fallbackBackground: some ShapeStyle) -> some View {
             if #available(iOS 26.0, *) {
-                content.glassEffect(backportGlass.toGlass, in: shape, isEnabled: isEnabled)
+                content.glassEffect(backportGlass.toGlass, in: shape)
             } else {
                 content.background(fallbackBackground)
             }
@@ -318,7 +286,7 @@ public extension Backport where Content: View {
         _ hidden: Bool = true,
         for edges: Edge.Set = .all
     ) -> some View {
-        if #available(iOS 26.0, *), !os(visionOS) {
+        if #available(iOS 26.0, *) {
             content.scrollEdgeEffectHidden(hidden, for: edges)
         } else {
             content
@@ -360,7 +328,7 @@ public extension Backport where Content: View {
         }
     }
     
-    @ViewBuilder public func listSectionMargins(_ edges: Edge.Set = .all, _ length: CGFloat?) -> some View {
+    @ViewBuilder func listSectionMargins(_ edges: Edge.Set = .all, _ length: CGFloat?) -> some View {
         if #available(iOS 26.0, *) {
             content.listSectionMargins(edges, length)
         } else {
@@ -368,34 +336,4 @@ public extension Backport where Content: View {
         }
     }
     
-}
-
-// MARK: Toolbar Backports
-
-public struct BackportCustomizableToolbarContent<Content: CustomizableToolbarContent> {
-    let content: Content
-    
-    public init(_ content: Content) {
-        self.content = content
-    }
-}
-
-public extension CustomizableToolbarContent {
-    var backport: BackportCustomizableToolbarContent<Self> {
-        .init(self)
-    }
-}
-
-public extension BackportCustomizableToolbarContent {
-    @ViewBuilder
-    func matchedTransitionSource(
-        id: some Hashable,
-        in namespace: Namespace.ID
-    ) -> some CustomizableToolbarContent {
-        if #available(iOS 26.0, *) {
-            content.matchedTransitionSource(id: id, in: namespace)
-        } else {
-            content
-        }
-    }
 }
