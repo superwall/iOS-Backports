@@ -16,6 +16,35 @@ public extension View {
     var backport: Backport<Self> { Backport(self) }
 }
 
+
+// MARK: iOS 17 Extensions
+
+/// Backport for ContentTransition (iOS 17)
+public enum BackDeployedContentTransition {
+    case identity
+    case opacity
+    case scale
+}
+
+@MainActor
+public extension Backport where Content: View {
+    @ViewBuilder
+    func contentTransition(_ transition: BackDeployedContentTransition) -> some View {
+        if #available(iOS 17.0, *) {
+            switch transition {
+            case .identity:
+                content.contentTransition(.identity)
+            case .opacity:
+                content.contentTransition(.opacity)
+            case .scale:
+                content.contentTransition(.scale)
+            }
+        } else {
+            content
+        }
+    }
+}
+
 // MARK: iOS 18 Extensions
 
 @MainActor
@@ -71,10 +100,40 @@ public extension Backport where Content: View {
     }
 }
 
+// MARK: iOS 18 WidgetKit Extensions
+
+/// Backport enum for WidgetAccentedRenderingMode (iOS 18)
+public enum BackDeployedWidgetAccentedRenderingMode: Equatable, Sendable {
+    case automatic
+    case accented
+    case nonAccented
+}
+
+@MainActor
+public extension Backport where Content: View {
+    @ViewBuilder
+    func widgetAccentedRenderingMode(_ mode: BackDeployedWidgetAccentedRenderingMode) -> some View {
+        if #available(iOS 18.0, *) {
+            switch mode {
+            case .automatic:
+                content.widgetAccentedRenderingMode(.automatic)
+            case .accented:
+                content.widgetAccentedRenderingMode(.accented)
+            case .nonAccented:
+                content.widgetAccentedRenderingMode(.nonAccented)
+            }
+        } else {
+            content
+        }
+    }
+}
+
 // MARK: iOS 26 Extensions
 
 public enum BackportGlass: Equatable, Sendable {
     case regular
+    case clear
+    case identity
     case tinted(Color?)
     case interactive(isEnabled: Bool)
     case tintedAndInteractive(color: Color?, isEnabled: Bool)
@@ -91,6 +150,10 @@ extension BackportGlass {
         switch self {
         case .regular:
             return .regular
+        case .clear:
+            return .clear
+        case .identity:
+            return .identity
         case .tinted(let color):
             return .regular.tint(color)
         case .interactive(let isEnabled):
@@ -104,6 +167,7 @@ extension BackportGlass {
 public enum BackportGlassEffectTransition: Equatable, Sendable {
     case identity
     case matchedGeometry(properties: MatchedGeometryProperties = .frame, anchor: UnitPoint = .center)
+    case materialize
 }
 
 @available(iOS 26, *)
@@ -114,6 +178,8 @@ public extension BackportGlassEffectTransition {
             return .identity
         case .matchedGeometry(let properties, let anchor):
             return .matchedGeometry(properties: properties, anchor: anchor)
+        case .materialize:
+            return .materialize
         }
     }
 }
@@ -190,24 +256,20 @@ public extension BackportTabBarMinimizeBehavior {
 
 @MainActor
 public extension Backport where Content: View {
-    @ViewBuilder func glassEffectTransition(
-        _ transition: BackportGlassEffectTransition,
-        isEnabled: Bool = true
-    ) -> some View {
+    @ViewBuilder func glassEffectTransition(_ transition: BackportGlassEffectTransition) -> some View {
         if #available(iOS 26.0, *) {
-            content.glassEffectTransition(transition.toTransition, isEnabled: isEnabled)
+            content.glassEffectTransition(transition.toTransition)
         } else {
             content
         }
     }
-
+    
     @ViewBuilder func glassEffect(
         _ backportGlass: BackportGlass = .regular,
-        in shape: some Shape = Capsule(),
-        isEnabled: Bool = true
+        in shape: some Shape = DefaultGlassEffectShape()
     ) -> some View {
         if #available(iOS 26.0, *) {
-            content.glassEffect(backportGlass.toGlass, in: shape, isEnabled: isEnabled)
+            content.glassEffect(backportGlass.toGlass, in: shape)
         } else {
             content
         }
@@ -218,12 +280,12 @@ public extension Backport where Content: View {
         in shape: some Shape = Capsule(),
         isEnabled: Bool = true,
         fallbackBackground: some ShapeStyle) -> some View {
-        if #available(iOS 26.0, *) {
-            content.glassEffect(backportGlass.toGlass, in: shape, isEnabled: isEnabled)
-        } else {
-            content.background(fallbackBackground)
+            if #available(iOS 26.0, *) {
+                content.glassEffect(backportGlass.toGlass, in: shape, isEnabled: isEnabled)
+            } else {
+                content.background(fallbackBackground)
+            }
         }
-    }
     
     @ViewBuilder func glassButtonStyle() -> some View {
         if #available(iOS 26.0, *) {
@@ -240,7 +302,7 @@ public extension Backport where Content: View {
             content
         }
     }
-
+    
     @ViewBuilder func scrollEdgeEffectStyle(
         _ style: BackportScrollEdgeEffectStyle?,
         for edges: Edge.Set
@@ -251,13 +313,13 @@ public extension Backport where Content: View {
             content
         }
     }
-
-    @ViewBuilder func scrollEdgeEffectDisabled(
-        _ disabled: Bool = true,
+    
+    @ViewBuilder func scrollEdgeEffectHidden(
+        _ hidden: Bool = true,
         for edges: Edge.Set = .all
     ) -> some View {
-        if #available(iOS 26.0, *) {
-            content.scrollEdgeEffectDisabled(disabled, for: edges)
+        if #available(iOS 26.0, *), !os(visionOS) {
+            content.scrollEdgeEffectHidden(hidden, for: edges)
         } else {
             content
         }
@@ -281,7 +343,7 @@ public extension Backport where Content: View {
             content
         }
     }
-
+    
     @ViewBuilder func symbolVariableValueMode(_ mode: BackportSymbolVariableValueMode?) -> some View {
         if #available(iOS 26.0, *) {
             content.symbolVariableValueMode(mode?.toMode)
@@ -293,6 +355,45 @@ public extension Backport where Content: View {
     @ViewBuilder func tabBarMinimizeBehavior(_ behavior: BackportTabBarMinimizeBehavior) -> some View {
         if #available(iOS 26.0, *) {
             content.tabBarMinimizeBehavior(behavior.toBehavior)
+        } else {
+            content
+        }
+    }
+    
+    @ViewBuilder public func listSectionMargins(_ edges: Edge.Set = .all, _ length: CGFloat?) -> some View {
+        if #available(iOS 26.0, *) {
+            content.listSectionMargins(edges, length)
+        } else {
+            content
+        }
+    }
+    
+}
+
+// MARK: Toolbar Backports
+
+public struct BackportCustomizableToolbarContent<Content: CustomizableToolbarContent> {
+    let content: Content
+    
+    public init(_ content: Content) {
+        self.content = content
+    }
+}
+
+public extension CustomizableToolbarContent {
+    var backport: BackportCustomizableToolbarContent<Self> {
+        .init(self)
+    }
+}
+
+public extension BackportCustomizableToolbarContent {
+    @ViewBuilder
+    func matchedTransitionSource(
+        id: some Hashable,
+        in namespace: Namespace.ID
+    ) -> some CustomizableToolbarContent {
+        if #available(iOS 26.0, *) {
+            content.matchedTransitionSource(id: id, in: namespace)
         } else {
             content
         }
