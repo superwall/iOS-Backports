@@ -262,7 +262,15 @@ public extension Backport where Content: View {
             content
         }
     }
-    
+
+    @ViewBuilder func glassProminentButtonStyle() -> some View {
+        if #available(iOS 26.0, *) {
+            content.buttonStyle(.glassProminent)
+        } else {
+            content.buttonStyle(.borderedProminent)
+        }
+    }
+
     @ViewBuilder func backgroundExtensionEffect() -> some View {
         if #available(iOS 26.0, *) {
             content.backgroundExtensionEffect()
