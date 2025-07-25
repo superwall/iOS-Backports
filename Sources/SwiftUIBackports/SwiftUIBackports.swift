@@ -255,11 +255,11 @@ public extension Backport where Content: View {
             }
         }
     
-    @ViewBuilder func glassButtonStyle() -> some View {
+    @ViewBuilder func glassButtonStyle(fallbackStyle: some PrimitiveButtonStyle = DefaultButtonStyle()) -> some View {
         if #available(iOS 26.0, *) {
             content.buttonStyle(.glass)
         } else {
-            content
+            content.buttonStyle(fallbackStyle)
         }
     }
 
