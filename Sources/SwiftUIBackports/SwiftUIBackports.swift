@@ -225,6 +225,14 @@ public extension BackportTabBarMinimizeBehavior {
 
 @MainActor
 public extension Backport where Content: View {
+    @ViewBuilder func presentationBackground(in shape: some ShapeStyle = Material.thin) -> some View {
+        if #available(iOS 26.0, *) {
+            content
+        } else {
+            content.presentationBackground(shape)
+        }
+    }
+    
     @ViewBuilder func glassEffectTransition(_ transition: BackportGlassEffectTransition) -> some View {
         if #available(iOS 26.0, *) {
             content.glassEffectTransition(transition.toTransition)
@@ -343,5 +351,4 @@ public extension Backport where Content: View {
             content
         }
     }
-    
 }
