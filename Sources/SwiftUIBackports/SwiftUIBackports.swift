@@ -262,7 +262,15 @@ public extension Backport where Content: View {
                 content.background(fallbackBackground)
             }
         }
-    
+
+    @ViewBuilder func glassEffectContainer(spacing: CGFloat? = nil) -> some View {
+        if #available(iOS 26.0, *) {
+            GlassEffectContainer(spacing: spacing) { content }
+        } else {
+            content
+        }
+    }
+
     @ViewBuilder func glassButtonStyle(fallbackStyle: some PrimitiveButtonStyle = DefaultButtonStyle()) -> some View {
         if #available(iOS 26.0, *) {
             content.buttonStyle(.glass)
