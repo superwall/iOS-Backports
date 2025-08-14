@@ -248,7 +248,7 @@ public extension Backport where Content: View {
         if #available(iOS 26.0, *) {
             content.glassEffect(backportGlass.toGlass, in: shape)
         } else {
-            content
+            content.clipShape(shape)
         }
     }
     
@@ -259,7 +259,7 @@ public extension Backport where Content: View {
             if #available(iOS 26.0, *) {
                 content.glassEffect(backportGlass.toGlass, in: shape)
             } else {
-                content.background(fallbackBackground)
+                content.background(fallbackBackground, in: shape)
             }
         }
     
