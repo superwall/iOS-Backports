@@ -81,16 +81,17 @@ Just copy the `Backport.swift` file into your project. That’s it.
 ## Backported Modifiers
 
 | iOS Version | Modifier                                | Description                                      |
-|-------------|------------------------------------------|--------------------------------------------------|
+|-------------|-----------------------------------------|-------------------------------------------------|
 | iOS 17.0    | `contentTransition(_:)`                 | Applies a basic or numeric content transition    |
 | iOS 18.0    | `matchedTransitionSource(id:in:)`       | Marks a view as a matched transition source      |
-| iOS 18.0    | `presentationSizeForm()`                | Applies `.presentationSizing(.form)`            |
+| iOS 18.0    | `presentationSizeForm()`                | Applies `.presentationSizing(.form)`             |
 | iOS 18.0    | `zoom(sourceID:in:)`                    | Applies a zoom navigation transition             |
 | iOS 18.1    | `imagePlayground(_:completion:)`        | Presents an image playground sheet               |
 | iOS 26.0    | `backgroundExtensionEffect()`           | Extends background beyond safe areas             |
 | iOS 26.0    | `glassButtonStyle()`                    | Applies the glass button style                   |
 | iOS 26.0    | `glassEffect(_:in:)`                    | Applies a glass effect                           |
 | iOS 26.0    | `glassEffect(_:in:fallback:)`           | Glass effect with fallback background            |
+| iOS 26.0    | `glassEffectContainer(spacing:)`        | Embed in a `GlassEffectContainer`                |
 | iOS 26.0    | `glassEffectID(_:in:)`                  | Tags glass views for matched animations          |
 | iOS 26.0    | `glassEffectTransition(_:)`             | Animates glass transitions                       |
 | iOS 26.0    | `glassProminentButtonStyle()`           | Applies the glass prominent button style         |
