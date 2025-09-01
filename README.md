@@ -81,7 +81,7 @@ Just copy the `Backport.swift` file into your project. That’s it.
 ## Backported Modifiers
 
 | iOS Version | Modifier                                | Description                                      |
-|-------------|-----------------------------------------|-------------------------------------------------|
+|-------------|-----------------------------------------|--------------------------------------------------|
 | iOS 17.0    | `contentTransition(_:)`                 | Applies a basic or numeric content transition    |
 | iOS 18.0    | `matchedTransitionSource(id:in:)`       | Marks a view as a matched transition source      |
 | iOS 18.0    | `presentationSizeForm()`                | Applies `.presentationSizing(.form)`             |
@@ -102,6 +102,7 @@ Just copy the `Backport.swift` file into your project. That’s it.
 | iOS 26.0    | `symbolColorRenderingMode(_:)`          | Sets symbol image rendering mode                 |
 | iOS 26.0    | `symbolVariableValueMode(_:)`           | Sets variable value rendering mode               |
 | iOS 26.0    | `tabBarMinimizeBehavior(_:)`            | Sets the tab bar minimize behavior               |
+| iOS 26.0    | `safeAreaBar(edge:alignment:spacing:content:)` | Shows the specified content as a custom bar above or below the modified view |
 
 ## Contributing
 
