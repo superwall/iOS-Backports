@@ -66,9 +66,9 @@ public extension Backport where Content: View {
     ) -> some View {
         if #available(iOS 18.0, macOS 12, *) {
             content
-            #if os(iOS)
+#if os(iOS)
                 .navigationTransition(.zoom(sourceID: sourceID, in: namespace))
-            #endif
+#endif
                 .interactiveDismissDisabled()
         } else {
             content
@@ -241,11 +241,7 @@ public extension Backport where Content: View {
         if #available(iOS 26.0, macOS 26, *) {
             content
         } else {
-            if #available(iOS 14, macOS 13.3, *) {
-                content.presentationBackground(shape)
-            } else {
-                content
-            }
+            content.presentationBackground(shape)
         }
     }
     
@@ -282,7 +278,7 @@ public extension Backport where Content: View {
                 }
             }
         }
-
+    
     @ViewBuilder func glassEffectContainer(spacing: CGFloat? = nil) -> some View {
         if #available(iOS 26.0, *) {
             GlassEffectContainer(spacing: spacing) { content }
@@ -290,7 +286,7 @@ public extension Backport where Content: View {
             content
         }
     }
-
+    
     @ViewBuilder func glassButtonStyle(fallbackStyle: some PrimitiveButtonStyle = DefaultButtonStyle()) -> some View {
         if #available(iOS 26.0, macOS 26, *) {
             content.buttonStyle(.glass)
@@ -298,7 +294,7 @@ public extension Backport where Content: View {
             content.buttonStyle(fallbackStyle)
         }
     }
-
+    
     @ViewBuilder func glassProminentButtonStyle() -> some View {
         if #available(iOS 26.0, macOS 26, *) {
             content.buttonStyle(.glassProminent)
@@ -310,7 +306,7 @@ public extension Backport where Content: View {
             }
         }
     }
-
+    
     @ViewBuilder func backgroundExtensionEffect() -> some View {
         if #available(iOS 26.0, macOS 26, *) {
             content.backgroundExtensionEffect()
@@ -387,7 +383,7 @@ public extension Backport where Content: View {
             content
         }
     }
-
+    
     @ViewBuilder func safeAreaBar<V: View>(edge: VerticalEdge,
                                            alignment: HorizontalAlignment = .center,
                                            spacing: CGFloat? = nil,
