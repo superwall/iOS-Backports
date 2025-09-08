@@ -240,8 +240,10 @@ public extension Backport where Content: View {
     @ViewBuilder func presentationBackground(in shape: some ShapeStyle = Material.thin) -> some View {
         if #available(iOS 26.0, macOS 26, *) {
             content
-        } else {
+        } else if #available(macOS 13.3, *) {
             content.presentationBackground(shape)
+        } else {
+            content
         }
     }
     
@@ -280,7 +282,7 @@ public extension Backport where Content: View {
         }
     
     @ViewBuilder func glassEffectContainer(spacing: CGFloat? = nil) -> some View {
-        if #available(iOS 26.0, *) {
+        if #available(iOS 26.0, macOS 26, *) {
             GlassEffectContainer(spacing: spacing) { content }
         } else {
             content
@@ -388,7 +390,7 @@ public extension Backport where Content: View {
                                            alignment: HorizontalAlignment = .center,
                                            spacing: CGFloat? = nil,
                                            content: () -> V) -> some View {
-        if #available(iOS 26.0, *) {
+        if #available(iOS 26.0, macOS 26, *) {
             self.content.safeAreaBar(edge: edge, alignment: alignment, spacing: spacing, content: content)
         } else {
             self.content.safeAreaInset(edge: edge, alignment: alignment, spacing: spacing, content: content)
