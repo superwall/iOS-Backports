@@ -387,7 +387,7 @@ public extension Backport where Content: View {
     @ViewBuilder func safeAreaBar<V: View>(edge: VerticalEdge,
                                            alignment: HorizontalAlignment = .center,
                                            spacing: CGFloat? = nil,
-                                           content: () -> V) -> some View {
+                                           @ViewBuilder content: () -> V) -> some View {
         if #available(iOS 26.0, *) {
             self.content.safeAreaBar(edge: edge, alignment: alignment, spacing: spacing, content: content)
         } else {
