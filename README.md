@@ -49,7 +49,7 @@ MyView()
     .backport.glassEffect()
 ```
 
-And the `Backport` type handles the fallback internally. Since iOS version checks occur at compile time, you aren't hit with SwiftUI performance penalities from `if/else` checks. Here, the left side is using a thin material, while the right uses a glass effect on iOS 26 and above:
+And the `Backport` type handles the fallback internally. As such, it removes all the `#available` clutter from your call sites and centralize the fallback, while still using runtime availability branching under the hood. Here, the left side is using a thin material, while the right uses a glass effect on iOS 26 and above:
 
 ![example](https://github.com/user-attachments/assets/397a5b20-8d70-4caf-a3e6-70c382cb150e)
 
