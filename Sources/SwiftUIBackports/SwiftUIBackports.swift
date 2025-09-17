@@ -288,7 +288,18 @@ public extension Backport where Content: View {
             content
         }
     }
-    
+
+    @ViewBuilder func glassEffectUnion(
+        id: (some Hashable & Sendable)?,
+        namespace: Namespace.ID
+    ) -> some View {
+        if #available(iOS 26.0, macOS 26, *) {
+            content.glassEffectUnion(id: id, namespace: namespace)
+        } else {
+            content
+        }
+    }
+
     @ViewBuilder func glassButtonStyle(fallbackStyle: some PrimitiveButtonStyle = DefaultButtonStyle()) -> some View {
         if #available(iOS 26.0, macOS 26, *) {
             content.buttonStyle(.glass)
