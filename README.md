@@ -95,6 +95,7 @@ Just copy the `Backport.swift` file into your project. That’s it.
 | iOS 26.0    | `glassEffectContainer(spacing:)`        | Embed in a `GlassEffectContainer`                |
 | iOS 26.0    | `glassEffectID(_:in:)`                  | Tags glass views for matched animations          |
 | iOS 26.0    | `glassEffectTransition(_:)`             | Animates glass transitions                       |
+| iOS 26.0    | `glassEffectUnion(_:namespace:)`         | Unites multiple glass effects by ID in a namespace |
 | iOS 26.0    | `glassProminentButtonStyle()`           | Applies the glass prominent button style         |
 | iOS 26.0    | `listSectionMargins(_:_: )`             | Sets margins for list sections                   |
 | iOS 26.0    | `presentationBackground(in:)`           | Applies a fallback background on earlier versions|
