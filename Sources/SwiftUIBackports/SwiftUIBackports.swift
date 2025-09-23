@@ -1,8 +1,12 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
+
 import SwiftUI
 import ImagePlayground
+#if canImport(WidgetKit)
+import WidgetKit
+#endif
 
 public struct Backport<Content> {
     public let content: Content
@@ -99,6 +103,42 @@ public extension Backport where Content: View {
             } else {
                 content
             }
+        } else {
+            content
+        }
+    }
+}
+
+// MARK: iOS 18 WidgetKit Extensions
+
+/// Backport mirror of WidgetAccentedRenderingMode (iOS 18)
+public enum BackportWidgetAccentedRenderingMode: Hashable, Sendable {
+    case accented
+    case desaturated
+    case accentedDesaturated
+    case fullColor
+}
+
+@available(iOS 18.0, *)
+public extension BackportWidgetAccentedRenderingMode {
+    var toSystem: WidgetAccentedRenderingMode {
+        switch self {
+        case .accented: return .accented
+        case .desaturated: return .desaturated
+        case .accentedDesaturated: return .accentedDesaturated
+        case .fullColor: return .fullColor
+        }
+    }
+}
+
+/// Backported Image-only modifier for widget accented rendering mode.
+@MainActor
+@available(iOS 14, macOS 11, *)
+public extension Backport where Content == Image {
+    @ViewBuilder
+    func widgetAccentedRenderingMode(_ renderingMode: BackportWidgetAccentedRenderingMode?) -> some View {
+        if #available(iOS 18.0, *) {
+            content.widgetAccentedRenderingMode(renderingMode?.toSystem)
         } else {
             content
         }
