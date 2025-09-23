@@ -87,6 +87,7 @@ Just copy the `Backport.swift` file into your project. That’s it.
 | iOS 18.0    | `presentationSizeForm()`                | Applies `.presentationSizing(.form)`             |
 | iOS 18.0    | `zoom(sourceID:in:)`                    | Applies a zoom navigation transition             |
 | iOS 18.1    | `imagePlayground(_:completion:)`        | Presents an image playground sheet               |
+| iOS 18.0    | `widgetAccentedRenderingMode(_:)`       | Sets how an `Image` should render in widget accented mode |
 | iOS 26.0    | `backgroundExtensionEffect()`           | Extends background beyond safe areas             |
 | iOS 26.0    | `glassButtonStyle()`                    | Applies the glass button style                   |
 | iOS 26.0    | `glassEffect(_:in:)`                    | Applies a glass effect                           |
