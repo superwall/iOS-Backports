@@ -119,7 +119,7 @@ public enum BackportWidgetAccentedRenderingMode: Hashable, Sendable {
     case fullColor
 }
 
-@available(iOS 18.0, *)
+@available(iOS 18.0, macOS 15.0, *)
 public extension BackportWidgetAccentedRenderingMode {
     var toSystem: WidgetAccentedRenderingMode {
         switch self {
@@ -137,7 +137,7 @@ public extension BackportWidgetAccentedRenderingMode {
 public extension Backport where Content == Image {
     @ViewBuilder
     func widgetAccentedRenderingMode(_ renderingMode: BackportWidgetAccentedRenderingMode?) -> some View {
-        if #available(iOS 18.0, *) {
+        if #available(iOS 18.0, macOS 15.0, *) {
             content.widgetAccentedRenderingMode(renderingMode?.toSystem)
         } else {
             content
