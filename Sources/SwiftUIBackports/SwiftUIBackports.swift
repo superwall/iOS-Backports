@@ -109,42 +109,6 @@ public extension Backport where Content: View {
     }
 }
 
-// MARK: iOS 18 WidgetKit Extensions
-
-/// Backport mirror of WidgetAccentedRenderingMode (iOS 18, macOS 15)
-public enum BackportWidgetAccentedRenderingMode: Hashable, Sendable {
-    case accented
-    case desaturated
-    case accentedDesaturated
-    case fullColor
-}
-
-@available(iOS 18.0, macOS 15.0, *)
-public extension BackportWidgetAccentedRenderingMode {
-    var toSystem: WidgetAccentedRenderingMode {
-        switch self {
-        case .accented: return .accented
-        case .desaturated: return .desaturated
-        case .accentedDesaturated: return .accentedDesaturated
-        case .fullColor: return .fullColor
-        }
-    }
-}
-
-/// Backported Image-only modifier for widget accented rendering mode.
-@MainActor
-@available(iOS 14, macOS 11, *)
-public extension Backport where Content == Image {
-    @ViewBuilder
-    func widgetAccentedRenderingMode(_ renderingMode: BackportWidgetAccentedRenderingMode?) -> some View {
-        if #available(iOS 18.0, macOS 15.0, *) {
-            content.widgetAccentedRenderingMode(renderingMode?.toSystem)
-        } else {
-            content
-        }
-    }
-}
-
 // MARK: iOS 26 Extensions
 
 @available(iOS 14, macOS 12, *)
