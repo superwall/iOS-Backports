@@ -381,7 +381,7 @@ public extension Backport where Content: View {
         }
     }
 
-    @ViewBuilder func tabViewBottomAccessory(_ content: () -> some View) -> some View {
+    @ViewBuilder func tabViewBottomAccessory(@ViewBuilder content: () -> some View) -> some View {
         if #available(iOS 26.0, macOS 26, *) {
             self.content.tabViewBottomAccessory(content: content)
         } else {
