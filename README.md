@@ -105,6 +105,7 @@ Just copy the `Backport.swift` file into your project. That’s it.
 | iOS 26.0    | `symbolVariableValueMode(_:)`           | Sets variable value rendering mode               |
 | iOS 26.0    | `tabBarMinimizeBehavior(_:)`            | Sets the tab bar minimize behavior               |
 | iOS 26.0    | `safeAreaBar(edge:alignment:spacing:content:)` | Shows the specified content as a custom bar above or below the modified view |
+| iOS 26.0    | `tabViewBottomAccessory(content:)` | Places a view as the bottom accessory of the tab view. |
 
 ## Contributing
 
