@@ -65,7 +65,7 @@ You can add this repo as a dependency in Xcode:
 
 Then, import the package:
 ```swift
-import Backport
+import SwiftUIBackports
 
 struct MyView: View {
     var body: some View {
