@@ -217,6 +217,11 @@ public enum BackportTabBarMinimizeBehavior: Hashable, Sendable {
     case never
 }
 
+public enum BackportSearchToolbarBehavior: Hashable, Sendable {
+    case automatic
+    case minimize
+}
+
 @available(iOS 26.0, macOS 26, *)
 public extension BackportTabBarMinimizeBehavior {
     var toBehavior: TabBarMinimizeBehavior {
@@ -237,6 +242,7 @@ public extension BackportTabBarMinimizeBehavior {
         }
     }
 }
+
 
 @MainActor
 @available(iOS 14, macOS 12, *)
@@ -417,6 +423,23 @@ public extension Backport where Content: View {
             self.content.safeAreaBar(edge: edge, alignment: alignment, spacing: spacing, content: content)
         } else {
             self.content.safeAreaInset(edge: edge, alignment: alignment, spacing: spacing, content: content)
+        }
+    }
+
+    @ViewBuilder func searchToolbarBehavior(_ behavior: BackportSearchToolbarBehavior) -> some View {
+        if #available(iOS 26.0, macOS 26, *) {
+            switch behavior {
+            case .automatic:
+                content.searchToolbarBehavior(.automatic)
+            case .minimize:
+#if os(macOS)
+                content.searchToolbarBehavior(.automatic)
+#else
+                content.searchToolbarBehavior(.minimize)
+#endif
+            }
+        } else {
+            content
         }
     }
 }
