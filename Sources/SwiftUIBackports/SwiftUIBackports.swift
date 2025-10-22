@@ -382,11 +382,15 @@ public extension Backport where Content: View {
     }
 
     @ViewBuilder func tabViewBottomAccessory(@ViewBuilder content: () -> some View) -> some View {
-        if #available(iOS 26.0, macOS 26, *) {
+#if os(macOS)
+        self.content
+#else
+        if #available(iOS 26.0, *) {
             self.content.tabViewBottomAccessory(content: content)
         } else {
             self.content
         }
+#endif
     }
     
     @ViewBuilder func tabBarMinimizeBehavior(_ behavior: BackportTabBarMinimizeBehavior) -> some View {
