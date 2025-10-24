@@ -446,9 +446,11 @@ public extension Backport where Content: View {
                 content.searchToolbarBehavior(.minimize)
 #endif
             }
-    
+        } else {
+            content
+        }
+    }
 }
-
 
 @MainActor
 @available(iOS 14, macOS 12, *)
