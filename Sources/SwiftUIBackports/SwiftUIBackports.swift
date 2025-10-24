@@ -21,6 +21,10 @@ public extension View {
     var backport: Backport<Self> { Backport(self) }
 }
 
+@available(iOS 14, macOS 11, *)
+public extension ToolbarContent {
+    var backport: Backport<Self> { Backport(self) }
+}
 
 // MARK: iOS 17 Extensions
 
@@ -417,6 +421,21 @@ public extension Backport where Content: View {
             self.content.safeAreaBar(edge: edge, alignment: alignment, spacing: spacing, content: content)
         } else {
             self.content.safeAreaInset(edge: edge, alignment: alignment, spacing: spacing, content: content)
+        }
+    }
+    
+}
+
+
+@MainActor
+@available(iOS 14, macOS 12, *)
+public extension Backport where Content: ToolbarContent {
+    @ToolbarContentBuilder
+    func sharedBackgroundVisibility(_ visibility: Visibility) -> some ToolbarContent {
+        if #available(iOS 26.0, macOS 26, *) {
+            content.sharedBackgroundVisibility(visibility)
+        } else {
+            content
         }
     }
 }
