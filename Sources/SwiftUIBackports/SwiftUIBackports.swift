@@ -456,7 +456,7 @@ public extension Backport where Content: View {
 @available(iOS 14, macOS 12, *)
 public extension Backport where Content: ToolbarContent {
     @ToolbarContentBuilder
-    func sharedBackgroundVisibility(_ visibility: Visibility) -> some ToolbarContent {
+    func sharedToolBarBackgroundVisibility(_ visibility: Visibility) -> some ToolbarContent {
         if #available(iOS 26.0, macOS 26, *) {
             content.sharedBackgroundVisibility(visibility)
         } else {
