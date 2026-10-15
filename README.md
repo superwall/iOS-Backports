@@ -108,6 +108,7 @@ Just copy the `Backport.swift` file into your project. That’s it.
 | iOS 26.0    | `tabViewBottomAccessory(content:)` | Places a view as the bottom accessory of the tab view. |
 | iOS 26.0    | `searchToolbarBehavior(_:)` | Configures the behavior for search in the toolbar. |
 | iOS 26.0    | `sharedBackgroundVisibility(_:)` | Controls the visibility of the glass background effect on items in the toolbar. |
+| iOS 27.1    | `axisBehavior(_:)`                      | Controls which bar axes a toolbar item can appear in |
 
 ## Contributing
 
